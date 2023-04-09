@@ -17,11 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
+from ledapp.views import led_view
 
 from api.views import iot
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('iot/commands', iot.get_iot_commands),
-    path('iot/commands/<int:id>', csrf_exempt(iot.ack_iot_command))
+    path('iot/commands', iot.get_iot_commands,  name='iot'),
+    path('iot/commands/<int:id>', csrf_exempt(iot.ack_iot_command),  name='iot1'),
+    path('led/', led_view, name='led'),
 ]

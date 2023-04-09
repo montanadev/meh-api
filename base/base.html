@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% block styles %}
+    {% endblock %}
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'iot' %}">IOT list</a></li>
+            <li><a href="{% url 'led' %}">LED Control Panel</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+{% block scripts %}
+{% endblock %}
+</body>
+</html>
