@@ -17,6 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from api.views import iot
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('iot/commands', iot.get_iot_commands)
 ]
