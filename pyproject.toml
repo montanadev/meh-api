@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "meh-api"
+version = "0.1.0"
+description = ""
+authors = ["Nathan Evans <nathan@de1ux.com>"]
+readme = "README.md"
+packages = [{include = "meh_api"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.2"
+django-rest-framework = "^0.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
