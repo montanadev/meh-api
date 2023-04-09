@@ -1,4 +1,5 @@
 This API is your gateway to an epic experience, enabling the following applications to interface with each other:
+##### These are all the mad pipe dreams of a loon.  None of this exists yet. 
 ## 💡 LEDApp - The Light Show
 This is an ESP8266 that controls an LED light strip. It's not just any light strip, it's a masterpiece of colors and emotions. Each person is represented by a light, and their red, blue, and green colors tell a story about them. The amount of 🔴red in the light indicates how recently they've visited the hackerspace. The amount of 🔵blue indicates how active they are on social media. The amount of 🟢green indicates how many golf balls they can fit in their mouth and other such hackerspace achievements. The lights will fade as time goes on and must be refreshed by doing stuff. Members will be able to opt-out of the LED, but why would they? It's the coolest thing since sliced bread! And if they do opt-out, they will be shamed for it. **SHAME!**<span style="font-size: 10px;">(not really).</span>
 ## 💥 DoorApp - The Keeper of the Keys
