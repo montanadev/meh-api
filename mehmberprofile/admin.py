@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 from django.contrib.auth.models import User
-from .models import UserProfile, PaymentHistory
+
+from .models import UserProfile, PaymentHistory, MembershipHistory
 from .views import membership_due
 
 
@@ -15,11 +16,18 @@ class PaymentHistoryInline(admin.TabularInline):
     extra = 0
 
 
+class MembershipHistoryInline(admin.TabularInline):
+    model = MembershipHistory
+    extra = 0
+
+
 class UserAdmin(DefaultUserAdmin):
-    inlines = (UserProfileInline, PaymentHistoryInline)
+    inlines = [UserProfileInline, PaymentHistoryInline, MembershipHistoryInline]
 
     def membership_due(self, obj):
-        return membership_due(obj)
+        due = membership_due(obj)
+        str_due = "${:,.2f}".format(abs(due))
+        return str_due + '(credit)' if due < 0 else str_due
 
     membership_due.short_description = "Membership Due as of"
 
