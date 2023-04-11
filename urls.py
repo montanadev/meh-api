@@ -19,9 +19,12 @@ from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
 
 from api.views import iot
+from api.views.sensor_views import SensorListView, SensorCommandsListView, SensorCommandUpdateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('iot/commands', iot.get_iot_commands, name='iot'),
-    path('iot/commands/<int:id>', csrf_exempt(iot.ack_iot_command), name='iot1'),
+    path('sensors/', SensorListView.as_view(), name='sensor-list-create'),
+    path('sensors/<str:sensor_id>/commands/', SensorCommandsListView.as_view(), name='sensor-commands-list-create'),
+    path('sensors/<str:sensor_id>/commands/<int:pk>', SensorCommandUpdateView.as_view(),
+         name='sensor-commands-update')
 ]
