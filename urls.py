@@ -16,9 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.views.decorators.csrf import csrf_exempt
 
-from api.views import iot
 from api.views.sensor_views import SensorListView, SensorCommandsListView, SensorCommandUpdateView
 
 urlpatterns = [

@@ -1,4 +1,5 @@
-from rest_framework.generics import ListAPIView, ListCreateAPIView, get_object_or_404, RetrieveUpdateAPIView
+from django.utils import timezone
+from rest_framework.generics import ListCreateAPIView, get_object_or_404, RetrieveUpdateAPIView
 
 from api.models.sensor import Sensor, SensorCommand
 from api.serializers import SensorSerializer, SensorCommandSerializer
@@ -17,10 +18,15 @@ class SensorCommandsListView(ListCreateAPIView):
         return SensorCommand.objects.filter(sensor=self.kwargs['sensor_id']).filter(acked=False).order_by('created_at')
 
     def get_serializer(self, *args, **kwargs):
+        sensor = get_object_or_404(Sensor, id=self.kwargs['sensor_id'])
+
         if self.request.method == "POST":
             # hydrate the sensor object from the URL parameter
-            sensor = get_object_or_404(Sensor, id=self.kwargs['sensor_id'])
             kwargs = {'data': {**kwargs['data'].dict(), 'sensor': sensor.id}}
+
+        # fetching commands moves the heartbeat forward
+        sensor.last_heartbeat = timezone.now()
+        sensor.save()
 
         return super().get_serializer(*args, **kwargs)
 
