@@ -2,6 +2,15 @@ This API is your gateway to an epic experience, enabling the following applicati
 
 ##### These are all the mad pipe dreams of a very few. None of this exists yet.
 
+## Getting Started:
+*  git clone
+*  download/install poetry (https://python-poetry.org/docs/)
+*  cd into cloned directory.
+*  type "poetry install"
+*  Type "poetry run ./runserver"
+
+
+
 ## 💡 LEDApp - The Light Show
 
 This is an ESP8266 that controls an LED light strip. It's not just any light strip, it's a masterpiece of colors and
