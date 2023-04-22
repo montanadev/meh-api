@@ -1,13 +1,17 @@
+import json
 
 from django import forms
 from django.forms import Widget
 from django.utils.safestring import mark_safe
+import paho.mqtt.client as mqtt
 
 from mehmberprofile.models import UserProfile, PaymentHistory, MehmbershipHistory
+
 
 class displayText(Widget):
     def render(self, name, value, attrs=None, renderer=None):
         return mark_safe(f'<div style="font-weight:bold; font-size: 1.5em;">{value}</div>')
+
 
 class MemberProfileForm(forms.ModelForm):
     opt_out_heading = forms.CharField(
@@ -44,7 +48,7 @@ class MemberProfileForm(forms.ModelForm):
             'red_value': '0-255 affect brightness, but you can have much greater numbers which slowly dwindle.',
             'green_value': '0-255 affect brightness, but you can have much greater numbers which slowly dwindle.',
             'blue_value': '0-255 affect brightness, but you can have much greater numbers which slowly dwindle.',
-            'led_number':  '0 is the first LED on the wall, 1 is the second... '
+            'led_number': '0 is the first LED on the wall, 1 is the second... '
         }
 
     def __init__(self, *args, **kwargs):
@@ -66,8 +70,17 @@ class MemberProfileForm(forms.ModelForm):
                 new_bool = cleaned_data[cd]
                 old_bool = getattr(self.instance, cd)
                 # if an opt_out has changed, but the opt_out_all didn't change:
-                if new_bool is not old_bool\
-                        and  cleaned_data[out_all] is getattr(self.instance, out_all):
-                    cleaned_data[out_all]  = False
-        return cleaned_data
+                if new_bool is not old_bool \
+                        and cleaned_data[out_all] is getattr(self.instance, out_all):
+                    cleaned_data[out_all] = False
 
+        client = mqtt.Client()
+        # might change to 192.168.1.250
+        client.connect("192.168.2.5", 1883, 60)
+        client.publish('test_sensor', payload=json.dumps({
+            'red': cleaned_data['red_value'],
+            'green': cleaned_data['green_value'],
+            'blue': cleaned_data['blue_value']
+        }), qos=0, retain=False)
+
+        return cleaned_data
