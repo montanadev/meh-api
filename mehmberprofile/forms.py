@@ -75,12 +75,11 @@ class MemberProfileForm(forms.ModelForm):
                     cleaned_data[out_all] = False
 
         client = mqtt.Client()
-        # might change to 192.168.1.250
-        client.connect("192.168.2.5", 1883, 60)
-        client.publish('test_sensor', payload=json.dumps({
-            'red': cleaned_data['red_value'],
-            'green': cleaned_data['green_value'],
-            'blue': cleaned_data['blue_value']
-        }), qos=0, retain=False)
+        client.connect("192.168.0.254", 1883, 60)
+# TODO get meh/meh-api/lightsstatus first to ensure we don't overwrite an LED that had dimmed during profile edit
+# above "TODO" would be a lot of work and little reward.
+        client.publish('meh/meh-api/lights', payload="{:d},{:d},{:d},{:d}".format(int(cleaned_data['led_number'])
+        ,int(cleaned_data['red_value']),int(cleaned_data['green_value']),int(cleaned_data['blue_value'])),
+                       qos=0, retain=False)
 
         return cleaned_data

@@ -14,8 +14,7 @@ class Command(BaseCommand):
 
         client = mqtt.Client()
         client.on_connect = on_connect
-        # might change to 192.168.1.250
-        client.connect("192.168.2.5", 1883, 60)
+        client.connect("192.168.0.254", 1883, 60)
         for i in range(3):
             client.publish('a/b', payload=i, qos=0, retain=False)
             print(f"send {i} to a/b")
