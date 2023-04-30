@@ -31,7 +31,7 @@ class UserAdmin(DefaultUserAdmin):
         str_due = "${:,.2f}".format(abs(due))
         return str_due + '(credit)' if due < 0 else str_due
 
-    mehmbership_due.short_description = "Mehmbership Due as of Today"
+    mehmbership_due.short_description = "Mehmbership Due as of Today. Yar test."
 
     list_display = DefaultUserAdmin.list_display + ('mehmbership_due',)
 
