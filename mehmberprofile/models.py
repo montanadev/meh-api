@@ -6,11 +6,11 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-def find_lowest_available_LED_light():
-    return 1
 
 
 class UserProfile(models.Model):
+
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     opt_out_all = models.BooleanField(default=False)
     opt_out_led_wall = models.BooleanField(default=False)
@@ -21,8 +21,8 @@ class UserProfile(models.Model):
     green_value = models.CharField(max_length=7, default="0")
     blue_value = models.CharField(max_length=7, default="0")
     led_number = models.IntegerField(verbose_name="LED Number", blank=True, null=True,
-                                     default=find_lowest_available_LED_light(),
-                                     validators=[MaxValueValidator(200), MinValueValidator(0)])
+                                     default=0,
+                                     validators=[MaxValueValidator(2000), MinValueValidator(0)])
 
     def __str__(self):
         return f"{self.user.username}'s profile"
