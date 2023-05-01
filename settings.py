@@ -25,6 +25,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# AUTH_USER_MODEL = 'mehmberportal.Member'
+
+LOGIN_REDIRECT_URL = 'mehmberportal:dashboard'
+LOGOUT_REDIRECT_URL = 'mehmberportal:login'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -36,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'mehmberprofile',
+    'mehmberportal',
 ]
 
 MIDDLEWARE = [

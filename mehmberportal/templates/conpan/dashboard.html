@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Dashboard</h2>
+  <p>Welcome, {{ user.username }}!</p>
+
+
+
+  <a href="{% url 'mehmberportal:unlock' %}" class="btn btn-primary">Unlock Door</a>
+
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+  <a href="{% url 'mehmberportal:logout' %}" class="btn btn-primary">Logout</a>
+{% endblock %}

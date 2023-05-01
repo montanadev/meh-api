@@ -92,7 +92,7 @@ class MemberProfileForm(forms.ModelForm):
 
     def find_lowest_available_LED_light(self):
         existing_led_numbers = UserProfile.objects.all().values_list('led_number', flat=True)
-        for i in range(0, 201):  # assuming 200 is the maximum number of LEDs
+        for i in range(0, 2001):  # assuming 2000 is the maximum number of LEDs
             if i not in existing_led_numbers:
                 return i
         return 0  # all LED numbers are taken
@@ -100,3 +100,4 @@ class MemberProfileForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         return super().save(*args, **kwargs)
+
