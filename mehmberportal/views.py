@@ -1,3 +1,4 @@
+import paho.mqtt.client as mqtt
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -41,11 +42,14 @@ def payment_history(request):
 @login_required
 def unlock(request):
     amount_due = mehmbership_due(request.user)
-    active_member = is_active_member
-    membership_in_good_standing = amount_due >= (-1 * 30 * 3) and active_member
+    active_member = is_active_member(request.user)
+    membership_in_good_standing = amount_due <= (30 * 3) and active_member
     access_granted = membership_in_good_standing
     if (access_granted):
-        pass
-        # TODO make MQTT pub to door/access topic.
+        client = mqtt.Client()
+        client.connect("192.168.0.254", 1883, 60)
+        # TODO sign this.  Maybe use JWT... probably not because then I'd have to keep track of time securely... NTP FTL
+        client.publish('meh/meh-api/door/access', payload="friend",
+                       qos=0, retain=False)
 
     return render(request, 'conpan/unlock.html', {'amount_due_str': amount_due_string(request), })
