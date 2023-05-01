@@ -23,3 +23,16 @@ def mehmbership_due(user):
             total_charged += mehmbership.monthly_price
     return total_charged - total_paid
 
+
+def amount_due_string(request):
+    amount_due = mehmbership_due(request.user)
+    if amount_due < 0:
+        amount_due_str = f"${abs(amount_due):,.2f} (credit)"
+    else:
+        amount_due_str = f"${amount_due:,.2f}"
+    return amount_due_str
+
+
+def is_active_member(user):
+    memberships = MehmbershipHistory.objects.filter(user=user, end_date__isnull=True)
+    return len(memberships) > 0

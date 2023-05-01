@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Control Panel</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <title>Control Panel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
+<body>{% if request.resolver_match.url_name != 'login' %}
 <div class="header">
-<ul>
-    <li><a href="{% url 'mehmberportal:dashboard' %}">Dashboard Home</a></li>
-    <li><a href="{% url 'mehmberportal:payment_history' %}">Payment History</a></li>
-    <!-- ... other links ... -->
-</ul>
+    <ul>
+        <li><a href="{% url 'mehmberportal:dashboard' %}">Dashboard Home</a></li>
+        <li><a href="{% url 'mehmberportal:payment_history' %}">Payment History</a></li>
+        s
+    </ul>
 </div>
-  <div class="main_container">
+{% endif %}
+<div class="main_container">
 
     {% block content %}
     {% endblock %}
-  </div>
+</div>
 </body>
 </html>

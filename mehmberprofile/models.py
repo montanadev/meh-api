@@ -2,15 +2,9 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
-
 
 
 class UserProfile(models.Model):
-
-
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     opt_out_all = models.BooleanField(default=False)
     opt_out_led_wall = models.BooleanField(default=False)

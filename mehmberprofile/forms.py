@@ -1,9 +1,7 @@
-import json
-
+import paho.mqtt.client as mqtt
 from django import forms
 from django.forms import Widget
 from django.utils.safestring import mark_safe
-import paho.mqtt.client as mqtt
 
 from mehmberprofile.models import UserProfile, PaymentHistory, MehmbershipHistory
 
@@ -76,10 +74,12 @@ class MemberProfileForm(forms.ModelForm):
 
         client = mqtt.Client()
         client.connect("192.168.0.254", 1883, 60)
-# TODO get meh/meh-api/lightsstatus first to ensure we don't overwrite an LED that had dimmed during profile edit
-# above "TODO" would be a lot of work and little reward.
+        # TODO get meh/meh-api/lightsstatus first to ensure we don't overwrite an LED that had dimmed during profile edit
+        # above "TODO" would be a lot of work and little reward.
         client.publish('meh/meh-api/lights', payload="{:d},{:d},{:d},{:d}".format(int(cleaned_data['led_number'])
-        ,int(cleaned_data['red_value']),int(cleaned_data['green_value']),int(cleaned_data['blue_value'])),
+                                                                                  , int(cleaned_data['red_value']),
+                                                                                  int(cleaned_data['green_value']),
+                                                                                  int(cleaned_data['blue_value'])),
                        qos=0, retain=False)
 
         led_number = self.cleaned_data.get('led_number')
@@ -89,7 +89,6 @@ class MemberProfileForm(forms.ModelForm):
 
         return cleaned_data
 
-
     def find_lowest_available_LED_light(self):
         existing_led_numbers = UserProfile.objects.all().values_list('led_number', flat=True)
         for i in range(0, 2001):  # assuming 2000 is the maximum number of LEDs
@@ -97,7 +96,5 @@ class MemberProfileForm(forms.ModelForm):
                 return i
         return 0  # all LED numbers are taken
 
-
     def save(self, *args, **kwargs):
         return super().save(*args, **kwargs)
-
