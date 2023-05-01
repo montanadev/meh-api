@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from mehmberprofile.models import PaymentHistory, MehmbershipHistory
-from mehmberprofile.views import mehmbership_due, amount_due_string, is_active_member
+from mehmberprofile.views import mehmbership_due, amount_due_string, is_active_member, mehmber_accessed_hackspace
 from .forms import LoginForm
 
 
@@ -51,5 +51,6 @@ def unlock(request):
         # TODO sign this.  Maybe use JWT... probably not because then I'd have to keep track of time securely... NTP FTL
         client.publish('meh/meh-api/door/access', payload="friend",
                        qos=0, retain=False)
+        mehmber_accessed_hackspace()
 
     return render(request, 'conpan/unlock.html', {'amount_due_str': amount_due_string(request), })

@@ -1,6 +1,7 @@
 from datetime import date
 
 from dateutil.relativedelta import relativedelta
+from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 
 from mehmberprofile.models import PaymentHistory, MehmbershipHistory
@@ -36,3 +37,9 @@ def amount_due_string(request):
 def is_active_member(user):
     memberships = MehmbershipHistory.objects.filter(user=user, end_date__isnull=True)
     return len(memberships) > 0
+
+
+@login_required
+def mehmber_accessed_hackspace():
+    # TODO implement -- set REDness of LED, track entry time, possibly play music, begin microwaving a churro, etc.
+    pass
