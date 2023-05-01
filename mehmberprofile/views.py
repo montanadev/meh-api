@@ -40,6 +40,6 @@ def is_active_member(user):
 
 
 @login_required
-def mehmber_accessed_hackspace():
+def mehmber_accessed_hackspace(request):
     # TODO implement -- set REDness of LED, track entry time, possibly play music, begin microwaving a churro, etc.
     pass

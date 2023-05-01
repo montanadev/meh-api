@@ -51,6 +51,6 @@ def unlock(request):
         # TODO sign this.  Maybe use JWT... probably not because then I'd have to keep track of time securely... NTP FTL
         client.publish('meh/meh-api/door/access', payload="friend",
                        qos=0, retain=False)
-        mehmber_accessed_hackspace()
+        mehmber_accessed_hackspace(request)
 
     return render(request, 'conpan/unlock.html', {'amount_due_str': amount_due_string(request), })
