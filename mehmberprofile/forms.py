@@ -4,6 +4,7 @@ from django.forms import Widget
 from django.utils.safestring import mark_safe
 
 from mehmberprofile.models import UserProfile, PaymentHistory, MehmbershipHistory
+from settings import SECRETS
 
 
 class displayText(Widget):
@@ -73,7 +74,7 @@ class MemberProfileForm(forms.ModelForm):
                     cleaned_data[out_all] = False
 
         client = mqtt.Client()
-        client.connect("192.168.0.254", 1883, 60)
+        client.connect(SECRETS['mqtt']['host'], SECRETS['mqtt']['port'], 60)
         # TODO get meh/meh-api/lightsstatus first to ensure we don't overwrite an LED that had dimmed during profile edit
         # above "TODO" would be a lot of work and little reward.
         client.publish('meh/meh-api/lights', payload="{:d},{:d},{:d},{:d}".format(int(cleaned_data['led_number'])

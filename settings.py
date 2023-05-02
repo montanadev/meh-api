@@ -1,3 +1,14 @@
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+SECRETS_DIR = os.path.join(BASE_DIR, "Secrets")
+
+# Absolute path to your secrets file
+SECRETS_FILE = os.path.join(SECRETS_DIR, "meapisecrets.py")
+
+
 """
 Django settings for meh_api project.
 
@@ -130,3 +141,30 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Load the secrets from the file
+if os.path.exists(SECRETS_FILE):
+    with open(SECRETS_FILE) as f:
+        exec(f.read(), globals())
+else:
+    raise FileNotFoundError("Secrets file not found at {}".format(SECRETS_FILE))
+
+SECRETS = meh_api_secrets # looks like it doesn't exist, but it does.  Access with SECRETS['mqtt']['host']
+
+#Example ../Settings/mehapisecrets.py as follows:
+# meh_api_secrets = {
+#     'mqtt': {
+#         'name': 'meh-derpybox',
+#         'user': 'notimplemented',
+#         'psk': 'notimplemented',
+#         'host': '192.168.0.254',
+#         'port': 1883,
+#     },
+#     'door': {
+#         'pubcert': '''-----BEGIN PGP PUBLIC KEY BLOCK-----
+# -----END PGP PUBLIC KEY BLOCK-----
+# ''',
+#         'psk': 'pass'
+#     }
+# }

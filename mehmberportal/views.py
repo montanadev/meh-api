@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 
 from mehmberprofile.models import PaymentHistory, MehmbershipHistory
 from mehmberprofile.views import mehmbership_due, amount_due_string, is_active_member, mehmber_accessed_hackspace
+from settings import SECRETS
 from .forms import LoginForm
 
 
@@ -47,7 +48,7 @@ def unlock(request):
     access_granted = membership_in_good_standing
     if (access_granted):
         client = mqtt.Client()
-        client.connect("192.168.0.254", 1883, 60)
+        client.connect(SECRETS['mqtt']['host'], SECRETS['mqtt']['port'], 60)
         # TODO sign this.  Maybe use JWT... probably not because then I'd have to keep track of time securely... NTP FTL
         client.publish('meh/meh-api/door/access', payload="friend",
                        qos=0, retain=False)

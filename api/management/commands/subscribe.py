@@ -4,6 +4,8 @@ import time
 import paho.mqtt.client as mqtt
 from django.core.management.base import BaseCommand
 
+from settings import SECRETS
+
 logger = logging.getLogger(__name__)
 
 
@@ -21,5 +23,5 @@ class Command(BaseCommand):
         client = mqtt.Client()
         client.on_connect = on_connect
         client.on_message = on_message
-        client.connect("192.168.0.254", 1883, 60)
+        client.connect(SECRETS['mqtt']['host'], SECRETS['mqtt']['port'], 60)
         client.loop_forever()
