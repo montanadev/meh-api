@@ -1,7 +1,7 @@
 #!/bin/sh
-cd /usr/bin/meh-api/
-export PATH="/home/meh/.local/bin:$PATH"
-poetry run python3 manage.py makemigrations
-poetry run python3 manage.py migrate
-poetry install
-poetry run python3 manage.py runserver 0.0.0.0:80
+cd /usr/bin/meh-api/meh-api/
+git -C /usr/bin/meh-api/meh-api pull
+/home/meh/.local/bin/poetry install -p /usr/bin/meh-api/meh-api/
+/home/meh/.local/bin/poetry run python3 /usr/bin/meh-api/meh-api/manage.py makemigrations
+/home/meh/.local/bin/poetry run python3 /usr/bin/meh-api/meh-api/manage.py migrate
+/home/meh/.local/bin/poetry run python3 /usr/bin/meh-api/meh-api/manage.py runserver 0.0.0.0:80
