@@ -4,10 +4,12 @@ This API is your gateway to an epic experience, enabling the following applicati
 
 ## Getting Started:
 *  git clone
-*  download/install poetry (https://python-poetry.org/docs/)
 *  cd into cloned directory.
-*  type "poetry install"
-*  Type "poetry run ./runserver"
+*  python -m venv .env_python3.9
+*  source ./.env_python3.9/Scripts/activate (use "call" instead of source if windows)
+*  pip install poetry
+*  poetry install
+*  poetry run ./runserver.sh
 
 
 
